@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
-export const Header = ({ currentUser }) => {
+export const Header = ({ currentUser, dropDownHidden }) => {
   return (
     <div className="header">
       <Link to="/" className="logo-container">
@@ -23,18 +25,21 @@ export const Header = ({ currentUser }) => {
             <Link to="/signin" className="option" >SIGN IN</Link>
         }
 
-
+        <CartIcon />
       </div>
+      {!dropDownHidden && <CartDropdown />}
     </div>
   )
 }
 
 Header.propTypes = {
   currentUser: PropTypes.object,
+  dropDownHidden: PropTypes.bool
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser: currentUser,
+  dropDownHidden: hidden
 });
 
 export default connect(mapStateToProps)(Header);
