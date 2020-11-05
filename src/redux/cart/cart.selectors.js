@@ -13,3 +13,8 @@ export const selectItemsCount = createSelector(
     return pv + item.quantity
   }, 0)
 )
+
+export const selectCartHidden = createSelector(
+  [selectCart],
+  cart => cart.hidden
+)
