@@ -1,4 +1,21 @@
-export const SHOP_DATA = {
+const firebase = require('firebase/app');
+require('firebase/firestore');
+
+const config = {
+  apiKey: "AIzaSyD_gWLkI3yugz0uSWrrwltIoMxE02kCzj8",
+  authDomain: "r-store-a44b2.firebaseapp.com",
+  databaseURL: "https://r-store-a44b2.firebaseio.com",
+  projectId: "r-store-a44b2",
+  storageBucket: "r-store-a44b2.appspot.com",
+  messagingSenderId: "563904385304",
+  appId: "1:563904385304:web:d2a4f71b7196302411ce6d"
+};
+
+!firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+
+const firestore = firebase.firestore();
+
+const SHOP_DATA = {
   hats: {
     id: 1,
     title: 'Hats',
@@ -245,3 +262,21 @@ export const SHOP_DATA = {
     ]
   }
 };
+
+const addCollectionsData = async (docsToAdd = []) => {
+  const collectionRef = firestore.collection('collections');
+  const collections = Object.keys(SHOP_DATA)
+    .map(key => SHOP_DATA[key])
+    .map(({ title, items }) => ({ title, items }))
+
+  const batch = firestore.batch();
+  collections.forEach(collection => {
+    const docRef = collectionRef.doc();
+    batch.set(docRef, collection);
+  });
+
+  await batch.commit();
+
+}
+
+addCollectionsData()
