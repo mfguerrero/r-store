@@ -1,15 +1,29 @@
 import ShopActionTypes from './shop.types';
 
 const INITIAL_STATE = {
-  collections: null
+  collections: null,
+  isLoading: false,
+  errorMessage: ''
 };
 
 export const shopReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ShopActionTypes.UPDATE_COLLECTIONS:
+    case ShopActionTypes.SET_LOADING:
       return {
         ...state,
-        collections: action.payload
+        isLoading: true
+      }
+    case ShopActionTypes.SET_COLLECTIONS:
+      return {
+        ...state,
+        collections: action.payload,
+        isLoading: false
+      }
+    case ShopActionTypes.SET_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        errorMessage: action.payload
       }
     default:
       return state

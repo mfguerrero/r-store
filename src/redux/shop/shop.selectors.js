@@ -19,3 +19,13 @@ export const selectCollectionsForPreview = createSelector(
   [selectCollections],
   collections => collections ? Object.keys(collections).map(key => collections[key]) : []
 )
+
+export const selectIsLoading = createSelector(
+  [selectShop],
+  shop => shop.isLoading
+)
+
+export const selectIsCollectionLoaded = createSelector(
+  [selectShop],
+  shop => shop.collections ? true : false
+)
