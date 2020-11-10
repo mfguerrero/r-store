@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 export const shopReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ShopActionTypes.SET_LOADING:
+    case ShopActionTypes.SET_FETCH_COLLECTION_START:
       return {
         ...state,
         isLoading: true
